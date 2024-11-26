@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oops!</title>
+    <link rel="stylesheet" href="{% static "base/empty.css" %}">
+</head>
+<body>
+    <div class="empty-page">
+        <img src="{% static "images/Empty.png" %}" alt="No Data Found" class="empty-icon">
+        <h2>Oops! Nothing to Show</h2>
+        <p>It seems there is no data available at the moment.</p>
+        <a href="{% url "home" %}" class="back-home-btn">Back to Home</a>
+    </div>
+    
+</body>
+</html>

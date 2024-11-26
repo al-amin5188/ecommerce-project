@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Reviews</title>
+    <link rel="stylesheet" href="{% static 'review/styles.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <h1>All Reviews</h1>
+
+    <!-- Average Rating Section -->
+    <div class="average-rating">
+        <h2>Average Rating</h2>
+        <div class="avg-rating">
+            <span class="avg-stars">
+                {% for i in range_for_stars %}
+                    <span class="star {% if i <= avg_rating %}filled{% endif %}">&#9733;</span>
+                {% endfor %}
+            </span>
+            <span class="avg-value">{{ avg_rating }}</span>
+        </div>
+        <p>Based on {{ reviews|length }} reviews</p>
+    </div>
+
+    <!-- Sorting Option -->
+    <form method="get" action="{% url 'review_list' %}" class="sort-form">
+        <label for="sort">Sort by:</label>
+        <select name="sort" id="sort" onchange="this.form.submit()">
+            <option value="created_at" {% if request.GET.sort == 'created_at' %}selected{% endif %}>Newest</option>
+            <option value="rating" {% if request.GET.sort == 'rating' %}selected{% endif %}>Highest Rating</option>
+        </select>
+    </form>
+
+    <!-- Review List -->
+    <div class="review-list">
+        {% for review in reviews %}
+            <div class="review-card">
+                <h3>{{ review.product.name }} - <span class="rating">{{ review.rating }} Stars</span></h3>
+                <p><strong>{{ review.title }}</strong></p>
+                <p>{{ review.description }}</p>
+                <p class="review-info">
+                    <span class="username">{{ review.user.username }}</span> - 
+                    <span class="review-date">{{ review.created_at|date:"F j, Y" }}</span>
+                </p>
+            </div>
+        {% empty %}
+            <p>No reviews available yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title%} Home {% endblock title%}
+{% block extra_css %} <link rel="stylesheet" href="{% static "shop/home.css" %}"> {% endblock  %}
+
+{% block content %}
+<!-- ========== Start massages ========== -->
+<div>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+               <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align: center;">
+                    <strong >{{message}}</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% else %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center;">
+                    <strong >{{message}}</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<!-- ========== End massages ========== -->
+
+<!-- ========== Start Slider section ========== -->
+{% include "home/slider.html" %}
+<!-- ========== End Slider section ========== -->
+
+
+<!-- ========== Start Latest Product ========== -->
+<section class="latest-products spad">
+    <div class="container">
+        <div class="product-filter">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="section-title">
+                        <h2>Latest Products</h2>
+                    </div>
+                    <ul class="product-controls">
+                        {% for category in featured_categories %}
+                        <li data-filter=".{{category.slug}}">{{category.name}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="product-list">
+            {% for category in featured_categories %}
+            {% for product in category.products.all %}
+            <div class="col-lg-3 col-sm-6 mix {{category.slug}}">
+                <div class="single-product-item">
+                    <figure>
+                        <a href="{% url 'product-details' product.slug %}"><img src="{{product.image.url}}" alt="" style="height:280px"></a>
+                        
+                    </figure>
+                    <div class="product-text">
+                        <h6>{{product.name}}</h6>
+                        <p>${{product.price}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- ========== End Latest Product ========== -->
+
+
+<!-- ========== Start featured-products Section ========== -->
+<section class="latest-products spad">
+    <div class="container">
+        <div class="product-filter">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="section-title">
+                        <h2>Featured Products</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="product-list">
+            {% for product in featured_products %}
+            <div class="col-lg-3 col-sm-6 mix ">
+                <div class="single-product-item">
+                    <figure>
+                        <a href="{% url 'product-details' product.slug %}"><img src="{{product.image.url}}" alt="" style="height:270px"></a>
+                        
+                    </figure>
+                    <div class="product-text">
+                        <h6>{{product.name}}</h6>
+                        <p>${{product.price}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- ========== End featured-products Section ========== -->
+
+
+<!-- ========== Start customer-reviews ========== -->
+<section class="customer-reviews">
+    <h2>What Our Customers Say</h2>
+    <div class="reviews-grid">
+        {% for review in reviews %}
+            <div class="review-card">
+                <p>"{{ review.comment }}"</p>
+                <h4>- {{ review.user.username }}</h4>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+<!-- ========== End customer-reviews ========== -->
+
+
+<!-- ========== Start newsletter ========== -->
+<section class="newsletter">
+    <h2>Stay Updated</h2>
+    <p>Sign up for our newsletter to receive the latest news and exclusive offers.</p>
+    <form method="post" action="{% url "subscribe" %}">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+    </form>
+</section>
+<!-- ========== End newsletter ========== -->
+
+
+<!-- ========== Start features-ads ========== -->
+<section class="features-section spad">
+    <div class="features-ads">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="single-features-ads first">
+                        <img src="{% static "img/icons/f-delivery.png" %}" alt="">
+                        <h4>Free shipping</h4>
+                        <p>Fusce urna quam, euismod sit amet mollis quis, vestibulum quis velit. Vesti bulum mal
+                            esuada aliquet libero viverra cursus. </p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="single-features-ads second">
+                        <img src="{% static "img/icons/coin.png" %}" alt="">
+                        <h4>100% Money back </h4>
+                        <p>Urna quam, euismod sit amet mollis quis, vestibulum quis velit. Vesti bulum mal esuada
+                            aliquet libero viverra cursus. </p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="single-features-ads">
+                        <img src="{% static "img/icons/chat.png" %}" alt="">
+                        <h4>Online support 24/7</h4>
+                        <p>Urna quam, euismod sit amet mollis quis, vestibulum quis velit. Vesti bulum mal esuada
+                            aliquet libero viverra cursus. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ========== End features-ads ========== -->
+{% endblock content %}

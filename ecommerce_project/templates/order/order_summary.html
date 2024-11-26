@@ -1,0 +1,73 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %} {% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "order/order_summary.css" %}">
+{% endblock extra_css %}
+
+{% block content %}
+
+<!-- ========== Start Order Summary ========== -->
+<div class="order-summary-container">
+    <h1>Order Summary</h1><hr>
+    
+    <!-- Order Info -->
+    <div class="order-info">
+        <p><strong>Order ID:</strong> #{{order.id}}</p>
+        <p><strong>Date:</strong> {{order.created_at}}</p>
+        <p><strong>Status:</strong> {{order.status}}</p>
+    </div>
+    
+    <!-- Product List -->
+    <div class="product-list">
+        <h2>Products</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order_items %}
+                <tr>
+                    <td>{{item.product}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>${{item.unit_price}}</td>
+                    <td>${{item.total_price}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Order Total -->
+    <div class="order-total">
+        <p><strong>Subtotal:</strong> ${{subtotal}}</p>
+        <p><strong>Shipping:</strong> ${{shipping}}</p>
+        <p><strong>Descount:</strong>${{descount}}</p>
+        <p><strong>Total:</strong> ${{total_price}}</p>
+    </div>
+    
+    <!-- Address -->
+    <div class="order-address">
+        <h2>Shipping Address</h2><hr>
+        <p><strong>Name: </strong>{{shippingAddress.name}}</p>
+        <p><strong>Phone Number: </strong>{{shippingAddress.phone_number}}</p>
+        <p><strong>Address: </strong>{{shippingAddress.address}}, {{shippingAddress.city}}</p>
+        <p><strong>Country: </strong>{{shippingAddress.country}}</p>
+    </div>
+    
+    <!-- Buttons -->
+    <div class="buttons">
+        <button>Back to Shopping</button>
+        <button>Print Order Summary</button>
+    </div>
+</div>
+<!-- ========== End Order Summary ========== -->
+
+
+{% endblock content %}

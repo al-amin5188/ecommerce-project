@@ -1,0 +1,144 @@
+/* styles.css */
+
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Container for the page */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Title */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #444;
+}
+
+/* Average Rating Section */
+.average-rating {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.average-rating h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.avg-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: #f39c12;
+}
+
+.avg-stars {
+    display: flex;
+    margin-right: 10px;
+}
+
+.star {
+    font-size: 2rem;
+    color: #ccc;
+    margin: 0 2px;
+}
+
+.star.filled {
+    color: #f39c12;
+}
+
+.avg-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Sorting form */
+.sort-form {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.sort-form label {
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+.sort-form select {
+    padding: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Review list styling */
+.review-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+/* Review card styling */
+.review-card {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 30%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+}
+
+.review-card h3 {
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.rating {
+    color: #f39c12;
+}
+
+.review-card p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.review-info {
+    font-size: 0.875rem;
+    color: #777;
+    margin-top: 10px;
+}
+
+.username {
+    font-weight: bold;
+}
+
+.review-date {
+    color: #aaa;
+}

@@ -1,0 +1,234 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %} {{product.name}}{% endblock title %}
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="{% static "shop/product_page.css" %}">
+{% endblock extra_css %}
+
+{% block content %}
+<!-- ========== Start massages ========== -->
+<div>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+               <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align: center;">
+                    <strong >{{message}}</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% else %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center;">
+                    <strong >{{message}}</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<!-- ========== End massages ========== -->
+
+
+<!-- ========== Start Product Details ========== -->
+<section class="product-page">
+    <div class="container">
+        <div class="product-control">
+            <a href="{% url "shop_page" %}">Previous</a>
+            <a href="{% url "add_to_cart" product.slug %}">Next</a>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="product-img">
+                    <figure>
+                        <img src="{{product.image.url}}" alt="" style="height: 500px;">
+                        <a href="{% url "add-to-wishlist" product.slug %}">
+                            <div class="p-status">
+                                <strong>WishList</strong>
+                            </div>
+                        </a>
+                    </figure>
+                </div>
+                
+            </div>
+            <div class="col-lg-6">
+                <div class="product-content">
+                    <h2>{{product.name}}</h2>
+                    <div class="pc-meta">
+                        <h5>${{product.price}}</h5>
+                        {% if product.stock %}
+                        <div style="color:green;">
+                            <strong>Stock In</strong>
+                        </div>
+                        {% else %}
+                        <div style="color:red;">
+                            <strong>Stock Out </strong>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <p>{{product.description}}</p>
+                    <ul class="tags">
+                        <li><span>Category :</span>{{product.category}}</li>
+                    </ul>
+                    <a href="{% url "add_to_cart" product.slug %}" class="primary-btn pc-btn">Add to cart</a><br>        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ========== End Product Details ========== -->
+
+<!-- ========== Start Reviews ========== -->
+<section>
+    <div class="row">
+        
+        <div class="col-lg-6">
+            <div class="review-section">
+                <h2>Customer Reviews</h2>
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="{% static "images/man-avatar-isolated-png.webp" %}" alt="User Profile" class="review-avatar">
+                        <div class="review-user-info">
+                            <h4>admin</h4>
+                            <p>⭐⭐⭐⭐☆</p>
+                        </div>
+                    </div>
+                    <p class="review-text">
+                        "This product offers a great balance of quality, performance, and value for money. It is designed to meet the needs of most consumers with its straightforward features and reliable functionality. The build quality is generally solid, and it feels durable enough for daily use. Whether it's electronics, home goods, or clothing, the product performs well in most standard conditions and is suitable for a wide range of users."
+                    </p>
+                </div>
+                {% for review in reviews %}
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="{{review.picture.url}}" alt="User Profile" class="review-avatar">
+                        <div class="review-user-info">
+                            <h4>{{review.user.username}}</h4>
+                            
+                            <p>
+                                ⭐⭐⭐⭐⭐
+                                
+                            </p>
+                        </div>
+                    </div>
+                    <p class="review-text">
+                        "{{review.comment}}"
+                    </p>
+                </div>
+                {% endfor %}
+            
+                
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="review-section" >
+        
+                    <!-- Review Form -->
+                    <div id="popup" class="popup">
+                        <div class="popup-content">
+                            <h2>Create a Review</h2>
+                            <form method="POST" class="review-form"  action="{% url "add-to-reviews" product.slug %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="username">Your Name:</label>
+                                    <input type="text" id="username" placeholder="Enter your name" name="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="rating">Rating:</label>
+                                    <div class="rating">
+                                        <input type="radio" id="rating5" name="rating" value="5">
+                                        <label for="rating5"><i class="fa fa-star"></i></label>
+                            
+                                        <input type="radio" id="rating4" name="rating" value="4">
+                                        <label for="rating4"><i class="fa fa-star"></i></label>
+                            
+                                        <input type="radio" id="rating3" name="rating" value="3" checked>
+                                        <label for="rating3"><i class="fa fa-star"></i></label>
+                            
+                                        <input type="radio" id="rating2" name="rating" value="2">
+                                        <label for="rating2"><i class="fa fa-star"></i></label>
+                            
+                                        <input type="radio" id="rating1" name="rating" value="1">
+                                        <label for="rating1"><i class="fa fa-star"></i></label>
+                                    </div>
+                                </div>
+                            
+                                <p id="rating-output">Your rating: None</p>
+                            
+                                <div class="form-group">
+                                    <label for="review">Your Feedback:</label>
+                                    <textarea name="comment" id="review" rows="3" placeholder="Write your feedback..."></textarea>
+                                </div>
+                                <button type="submit" class="submit-btn">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                
+            
+                <script>
+                    // Rating system
+                    const ratingInputs = document.querySelectorAll('.rating input');
+                    const ratingOutput = document.getElementById('rating-output');
+            
+                    ratingOutput.textContent = 'Your rating: 3 Star';
+                    ratingInputs.forEach(input => {
+                        input.addEventListener('change', function() {
+                            const ratingValue = this.value;
+                            ratingOutput.textContent = `Your rating: ${ratingValue} Star`;
+                        });
+                    });
+                </script>
+            
+            </div>
+        </div>
+        
+    </div>
+
+    
+</section>
+<!-- ========== End Reviews ========== -->
+
+
+<!-- ========== Start Related Product ========== -->
+<section class="related-product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="section-title">
+                    <h2>Related Products</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for product in related_products %}
+            <div class="col-lg-3 col-sm-6">
+                <div class="single-product-item">
+                    <figure>
+                        <a href="{% url 'product-details' product.slug %}"><img src="{{product.image.url}}" alt="" style="height: 200px"></a>
+                        
+                    </figure>
+                    <div class="product-text">
+                        <h6>{{product.name}}</h6>
+                        <p>${{product.price}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- ========== End Related Product ========== -->
+
+
+{% endblock content %}
+
+{% block extra_js %}
+<script src="{% static "product_page.js" %}">
+</script>
+{% endblock extra_js %}

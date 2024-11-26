@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edite Profile </title>
+    <link rel="stylesheet" href="{% static "user_profile/edite_profile.css" %}">
+</head>
+
+<body>
+    <div class="edite_profile">
+        <a href="{% url "profile-view" %}">
+            <span class="close-btn" >&times;</span>
+        </a>  
+        <h3>Edit Profile</h3>
+        <form method="POST" action="{% url "edite-profile" %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <img src="{{profile.profile_picture.url}}"  class="profile-pic-preview">
+            <label for="profile-pic">Profile Picture:</label>
+            <input type="file" id="profile-pic" name="profile-pic" accept="image/*">
+
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname" value="{{profile.user.first_name}}" required>
+
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname" value="{{profile.user.last_name}}" required>
+
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" value="{{profile.phone_number}}" required>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" required>{{profile.address}}</textarea>
+
+            <button type="submit" class="save-btn">Save Changes</button>
+        </form>
+    </div>
+</body>
+    
+
+</html>

@@ -1,0 +1,51 @@
+.order-summary-container {
+    width: 80%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.order-summary-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.order-info, .order-total, .order-address {
+    margin-bottom: 20px;
+}
+
+.product-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.product-list table, .product-list th, .product-list td {
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.product-list th, .product-list td {
+    padding: 10px;
+}
+
+.buttons {
+    text-align: center;
+}
+
+.buttons button {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,86 @@
+
+{% load static %}
+
+{% block title %} <title>User Name</title>{% endblock title %}
+
+<!-- ========== Start Extra CSS ========== -->
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "user_profile/profile_details.css" %}">
+{% endblock extra_css %}
+<!-- ========== End Extra CSS ========== -->
+
+
+
+{% block content %}
+<!-- ========== Start Profile Details ========== -->
+<body>
+    <div class="profile-container">
+        <div class="profile-card">
+            <a href="{% url "profile-view" %}">
+                <span class="close-btn" >&times;</span>
+            </a>
+            <div class="profile-header">
+                <img src="{{profile.profile_picture.url}}" alt="Profile Picture" class="profile-pic">
+                <h2>{{profile.user.first_name}} {{profile.user.last_name}}</h2>
+                <p>Email: {{profile.user.email}}</p>
+            </div>
+    
+            <div class="profile-details">
+                <h3>Profile Information</h3>
+                <div class="detail-item">
+                    <strong>Full Name:</strong> {{profile.user.first_name}} {{profile.user.last_name}}
+                </div>
+                <div class="detail-item">
+                    <strong>Email:</strong> {{profile.user.email}}
+                </div>
+                <div class="detail-item">
+                    <strong>Phone:</strong> {{profile.phone_number}}
+                </div>
+                <div class="detail-item">
+                    <strong>Address:</strong> {{profile.address}}
+                </div>
+                <div class="detail-item">
+                    <strong>Joined:</strong> {{profile.user.date_joined}}
+                </div>
+            </div>
+            <a href="{% url "profile-view" %}">
+                <button class="edit-btn">Back</button>
+            </a>
+            <button class="edit-btn" id="open-popup">Edit Profile</button>
+        </div>
+    </div> 
+    <div class="popup-modal" id="popup-modal">
+        <div class="popup-content">
+            <span class="close-btn" id="close-popup">&times;</span>
+            <h3>Edit Profile</h3>
+            <form method="POST" action="{% url "edite-profile" %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <img src="{{profile.profile_picture.url}}" id="profile-pic-preview" class="profile-pic-preview">
+                <label for="profile-pic">Profile Picture:</label>
+                <input type="file" id="profile-pic" name="profile-pic" accept="image/*" onchange="previewImage(event)">
+    
+                <label for="fname">First Name:</label>
+                <input type="text" id="fname" name="fname" value="{{profile.user.first_name}}" required>
+    
+                <label for="lname">Last Name:</label>
+                <input type="text" id="lname" name="lname" value="{{profile.user.last_name}}" required>
+    
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" value="{{profile.phone_number}}" required>
+    
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" required>{{profile.address}}</textarea>
+    
+                <button type="submit" class="save-btn">Save Changes</button>
+            </form>
+        </div>
+    </div> 
+
+    <!-- ========== Start Extra js ========== -->
+    {% block extra_js %}
+    <script src="{% static "user_profile/profile_details.js" %}"></script>
+    {% endblock extra_js %}
+    <!-- ========== End Extra js ========== -->
+</body>
+
+{% endblock content %}

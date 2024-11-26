@@ -1,0 +1,140 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}Shoping Cart{% endblock title %}Shoping Cart
+
+
+
+{% block content %}
+<!-- ========== Start massages ========== -->
+<div>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+               <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align: center;">
+                    <strong >{{message}}</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% else %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center;">
+                    <strong >{{message}}</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<!-- ========== End massages ========== -->
+
+
+<!-- Cart Page Section Begin -->
+<div class="cart-page">
+    <div class="container">
+        <div class="cart-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="product-h">Product</th>
+                        <th>Price</th>
+                        <th class="quan">Quantity</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if cart.items.count > 0 %}
+                    {% for item in cart.items.all %}
+                    <tr>
+                        <td class="product-col">
+                            <img src="{{item.product.image.url}}" alt="" style=" width: 100px; height: 80px;">
+                            <div class="p-title">
+                                <h5>{{item.product.name}}</h5>
+                            </div>
+                        </td>
+                        <td class="price-col">${{item.product.price}}</td>
+                        <td class="quantity-col">
+                            <div class="pro-qty">
+                                <a href="{% url 'update_quantity' item.product.id -1 %}">
+                                    <span class="dec qtybtn">-</span>
+                                </a>
+                                <input type="text" value="{{item.quantity}}" >
+                                <a href="{% url 'update_quantity' item.product.id 1 %}">
+                                    <span class="inc qtybtn">+</span>
+                                </a>
+                            </div>
+                            
+                        </td>
+                        <td class="total">${{item.total_price}}</td>
+
+                        <a href="{% url "remove_from_cart" item.product.slug %}">
+                            <td class="product-close">X</td>
+                        </a>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="5"> No Product In Your Cart </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="cart-btn">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="coupon-input">
+                        <input type="text" placeholder="Enter cupone code">
+                    </div>
+                </div>
+                <div class="col-lg-5 offset-lg-1 text-left text-lg-right">
+                    
+                    <a href="{% url "clear_cart" %}">
+                        <div class="site-btn update-btn">Clear Cart</div>
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shopping-method">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="total-info">
+                        <div class="total-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>SubTotal</th>
+                                        <th>Descount</th>
+                                        <th>Shipping</th>
+                                        <th class="total-cart">Total Cart</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="total">${{ subtotal }}</td>
+                                        <td class="sub-total">${{ descount }}</td>
+                                        <td class="shipping">${{ shipping }}</td>
+                                        <td class="total-cart-p">${{ total }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 text-right">
+                                <a href="{% url "check-out" %}" class="primary-btn chechout-btn">Proceed to checkout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cart Page Section End -->
+{% endblock content %}
+

@@ -1,0 +1,70 @@
+{% load static %}
+
+
+<!-- Search model -->
+<div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch">+</div>
+        <form class="search-model-form">
+            <input type="text" id="search-input" placeholder="Search here.....">
+        </form>
+    </div>
+</div>
+<!-- Search model end -->
+
+<header class="header-section">
+    <div class="container-fluid">
+        <div class="inner-header">
+            <div class="logo" >
+                <a href="{% url "home" %}"><img src="{% static "images/logo1.jpg" %}" alt="" style=" width:180px; height:60px; border-radius:15px" ></a>
+            </div>
+            <div class="header-right">
+                <a href="{% url "cart_page" %}">
+                    <img src="{% static "images/cart.png" %}" alt="" style="width: 30px; height: 30px;  border-radius: 50%; text-decoration: none;">
+                    <span>{{cart_total_quantity}}</span>
+                </a>
+                
+                
+                {% if request.user.is_authenticated %}
+                    {% if profile.profile_picture %}
+                    <a href="{% url "profile-view" %}"><img src="{{profile.profile_picture.url}}" alt="" 
+                        style="width: 40px; height: 40px; border: 1px solid red; border-radius: 50%; text-decoration: none;">
+                    </a>
+                    {% else %}
+                    <a href="{% url "profile-view" %}"><img src="{% static 'images/man-avatar-isolated-png.webp' %}" alt="" 
+                        style="width: 40px; height: 40px; border: 1px solid red; border-radius: 50%; text-decoration: none;">
+                    </a>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="user-access">
+                
+                <img src="{% static "images/search-icon.jpg" %}" alt="" class="search-trigger" style="width:110px; height:40px; border-radius:15px">
+                
+            </div>
+            
+            {% if not request.user.is_authenticated %}
+            <div class="user-access">
+                <a href="{% url 'register' %}">Register</a>
+                <a href="{% url 'login' %}" class="in">Sign in</a>
+            </div>
+            {% endif %}
+            
+            <nav class="main-menu mobile-menu">
+                <ul>
+                    <li><a class="" href="{% url "home" %}">Home</a></li>
+                    <li><a href="{% url "shop_page" %}">Shop</a>
+                        <ul class="sub-menu">
+                            {% for category in categories %}
+                            <li><a href="{% url "categories" category.slug %}">{{category.name|title}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li><a href="{% url "contact" %}">Contact / FAQ</a></li> 
+                
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>

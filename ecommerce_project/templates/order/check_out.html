@@ -1,0 +1,143 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %} Check Out {% endblock title %}
+
+
+{% block content %}
+<!-- Page Add Section Begin -->
+<section class="page-add">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="page-breadcrumb">
+                    <h2>Checkout<span>.</span></h2>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <img src="{% static "img/add.jpg" %}" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Page Add Section End -->
+
+<!-- ========== Start massages ========== -->
+<div>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+               <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align: center;">
+                    <strong >{{message}}</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% else %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center;">
+                    <strong >{{message}}</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<!-- ========== End massages ========== -->
+
+<!-- Cart Total Page Begin -->
+<section class="cart-total-page spad">
+    <div class="container">
+        <form method="POST" action="{% url "create-order" %}" class="checkout-form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>Your Information</h3>
+                </div>
+            
+                <div class="col-lg-9">
+                    <div class="row">   
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="Name" name="name">
+                        </div>    
+                    </div>
+                    <div class="row">   
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="Phone Number" name="phone_number">
+                        </div>    
+                    </div>
+                    <div class="row">   
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="Address" name="address">
+                        </div>    
+                    </div>
+                    <div class="row">   
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="City" name="city">
+                        </div>    
+                    </div>
+                    <div class="row">   
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="Postal Code / Zip-code" name="postal_code">
+                        </div>    
+                    </div>
+                    <div class="row">   
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="Country" name="country">
+                        </div>    
+                    </div>
+                    
+                </div>
+                <div class="col-lg-3">
+                    <div class="order-table">
+                        <div class="cart-item">
+                            <span>Product</span>
+                            {% for item in cart_items %}
+                            <p class="product-name"> {{item.product}}-- </p>
+                            {% endfor %}
+                        </div>
+                        <div class="cart-item">
+                            <span>Sub Total</span>
+                            <p>${{subtotal}}</p>
+                        </div>
+                        <div class="cart-item">
+                            <span>Quantity</span>
+                            <p>{{total_quantity}}</p>
+                        </div>
+                        <div class="cart-item">
+                            <span>Discount</span>
+                            <p>${{discount}}</p>
+                        </div>
+                        <div class="cart-item">
+                            <span>Shipping</span>
+                            <p>${{shipping}}</p>
+                        </div>
+
+                        <div class="cart-total">
+                            <span>Total</span>
+                            <p>${{total}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="payment-method">
+                        <h3>Payment</h3>
+                        <ul>
+                            <li>Paypal <img src="{% static "img/paypal.jpg" %}" alt=""></li>
+                            <li>Credit / Debit card <img src="{% static "img/mastercard.jpg" %}" alt=""></li>
+                            <li>
+                                <label for="two">Pay when you get the package</label>
+                                <input type="radio" id="two" name="option" value="pay-latter">
+                            </li>
+                        </ul>
+                        <button type="submit">Place your order</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- Cart Total Page End -->
+{% endblock content %}

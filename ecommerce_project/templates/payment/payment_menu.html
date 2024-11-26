@@ -1,0 +1,41 @@
+{% extends "base/base.html" %}
+    {% load static %}
+
+{% block title %}<title>Payment</title>{% endblock title %}
+
+{% block extra_css %} <link rel="stylesheet" href="{% static "payment/payment_menu.css" %}"> {% endblock extra_css %}
+    
+
+{% block content %}
+<section>
+    <div class="payment-history-container">
+        <h2>Payment History</h2>
+    
+        <!-- Payment History Table -->
+        <table class="payment-history-table">
+            <thead>
+                <tr>
+                    <th>Payment ID</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Paymeny Method</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example of a Payment History Row -->
+                <tr>
+                    <td>#12345</td>
+                    <td>2024-11-15</td>
+                    <td>$49.99</td>
+                    <td class="status-completed">Completed</td>
+                    <td>Bkash </td>
+                </tr>
+                
+                <!-- Repeat above tr for more payments -->
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock content %}

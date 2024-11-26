@@ -1,0 +1,73 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %} Wish List{% endblock title %}
+
+{% block extra_css %} <link rel="stylesheet" href="{% static "cart/wish_list.css" %}"> {% endblock extra_css %}
+
+{% block content %}
+<!-- ========== Start massages ========== -->
+<div>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+               <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align: center;">
+                    <strong >{{message}}</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% else %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center;">
+                    <strong >{{message}}</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<!-- ========== End massages ========== -->
+
+<!-- ========== Start Wish List ========== -->
+<div class="wishlist-container">
+    <h2>Your Wishlist</h2>
+    
+    <!-- Empty Wishlist message -->
+    <div class="empty-wishlist" id="empty-wishlist">
+        <p>Your wishlist is empty. Add some products to your wishlist!</p>
+    </div>
+
+
+    <!-- Wishlist Items -->
+    <div class="wishlist-items" id="wishlist-items">
+        {% for item in wishlist %}
+        <div class="wishlist-item">
+            <img src="{{item.image.url}}" alt="Product Image" class="wishlist-item-image">
+            <div class="wishlist-item-details">
+                <a href="{% url "product-details" item.slug %}">
+                    <h3>{{item.name}}</h3>
+                </a>
+                
+                <p class="price">${{item.price}}</p>
+                <a href="{% url "remove-from-wishlist" item.slug %}">
+                    <button class="remove-btn">Remove</button>
+                </a>
+                
+            </div>
+        </div>
+        {% endfor %}
+        <!-- Repeat above div for more products -->
+    </div>
+</div>
+
+
+<!-- ========== End Wish List ========== -->
+
+
+{% endblock content %}
+
+{% block extra_js %}
+<script src="{% static "wish_list.js" %}"></script>
+{% endblock extra_js %}

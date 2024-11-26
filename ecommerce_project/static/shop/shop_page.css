@@ -1,0 +1,51 @@
+/***** Sort & Search Section *****/ 
+#margin{
+    margin-top: 30px;
+}
+
+.srcbox{
+    border-radius: 5px;
+    border-color: #f40b0b;
+}
+
+.src-botton{
+    background-color: #f40b0b;
+    border: none;
+    color: white;
+    margin: 4px 2px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    padding: 3px 15px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+/***** End Sort & Search Section *****/
+
+
+/***** Pagination style *****/ 
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.pagination .step-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination .step-links a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.pagination .step-links .current {
+    font-weight: bold;
+}
+/***** End Pagination style *****/

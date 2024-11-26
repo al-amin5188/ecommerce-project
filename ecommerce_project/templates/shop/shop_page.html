@@ -1,0 +1,132 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %}Shop{% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "shop/shop_page.css" %}">
+{% endblock  %}
+
+{% block content %}
+<!-- ========== Start small add ========== -->
+<section>
+    <div class="header-info">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="header-item">
+                        <img src="img/icons/delivery.png" alt="">
+                        <p>Free shipping on orders over $30 in Bangladesh</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-left text-lg-center">
+                    <div class="header-item">
+                        <img src="img/icons/voucher.png" alt="">
+                        <p>20% Student Discount</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-left text-xl-right">
+                    <div class="header-item">
+                    <img src="img/icons/sales.png" alt="">
+                    <p>30% off on dresses. Use code: allamin</p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ========== End small add ========== -->
+
+
+<!-- ========== Start Sort  & Search Section ========== -->
+<section>
+    <div class="container ">
+        <div class="row  " id="margin">
+            <div class="col categories-controls">
+                <div class="categories-filter">
+                    <div class="cf-left">
+                        <form name="sort" method="get" action="{% url 'shop_page' %}">
+                            <select class="sort" onchange="this.form.submit()">
+                                <option value="">Sort by</option>
+                                <option value="order" {% if sort_option == 'order' %}selected{% endif %}>Order ID</option>
+                                <option value="new" {% if sort_option == 'new' %}selected{% endif %}>Newest First</option>
+                                <option value="price" {% if sort_option == 'price' %}selected{% endif %}>Price</option>
+                            </select>
+                        </form>
+                    </div>
+    
+                </div>
+            </div>
+            
+            <div class="col"></div>
+            <div class="col">
+                <form method="get" action="{% url 'shop_page' %}">
+                    <input 
+                        class="srcbox"
+                        type="text" 
+                        name="q" 
+                        placeholder="Search products..." 
+                        value="{{ query|default:'' }}" 
+                    />
+                    <button type="submit" class="src-botton">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ========== End Sort  & Search Section========== -->
+
+
+<!-- ========== Start All Product List ========== -->
+<section class="categories-page spad">
+    <div class="container">
+        <div class="row">
+            {% for product in products %}
+            <div class="col-lg-3 col-md-6">
+                <div class="single-product-item">
+                    <figure>
+                        <img src="{{product.image.url}}" alt="" style="height:200px">
+                    
+                        <div class="hover-icon">
+                            <a href="{{product.image.url}}" class="pop-up"><img src="{% static "img/icons/zoom-plus.png" %}"
+                                    alt=""></a>
+                        </div>
+                    </figure>
+                    <div class="product-text">
+                        <a href="{% url 'product-details' product.slug %}">
+                            <h6>{{product.name}}</h6>
+                        </a>
+                        <p>${{product.price}}</p>
+                    </div>
+                </div>
+            </div>     
+            {% endfor %} 
+        </div> 
+    </div>
+</section>
+<!-- ========== End All Product List ========== -->
+
+
+<!-- ========== Start Pagination Controls ========== -->
+<section>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">&laquo; First</a>
+                <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">Previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">Last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</section>
+<!-- ========== End Pagination Controls ========== -->
+
+{% endblock content %}
